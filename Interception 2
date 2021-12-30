@@ -1,0 +1,24 @@
+Problem statement:
+
+Someone on this network is periodically sending the flag to ... someone else on this network, over TCP port 8000. Go get it.
+ssh ctf-46ed3559da08@host.cg21.metaproblems.com -p 7000
+
+Explanation:
+
+This is similar to interception 1, with one difference here the transport layer protocol being used is TCP instead of UDP. And here you will need some knowledge on the difference 
+between TCP and UDP connection.
+
+UDP connection is simple, The sender will keep sending the packets without worrying whether there is any application running on the receiver side or not. 
+With TCP, connection needs to be established before the packets can be sent from sender to receiver. Also you may want to read about the steps involved in creating a TCP socket vs UDP socket
+
+Moving on to steps to resolve the issue:
+First few steps are same:
+# ifconfig eth0 down
+# ifconfig eth0 192.168.0.78
+# ifconfig eth0 up
+# ping 192.168.0.1
+# traceroute 192.168.0.1
+
+To read the TCP data we will make use of netcat command line utility.
+
+# nc -l 8000
