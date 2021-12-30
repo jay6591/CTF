@@ -1,0 +1,9 @@
+Question:
+Sometimes in forensics, we run into files that have odd or unknown file extensions. In these cases, it's helpful to look at some of the file format signatures to figure out what they are. We use something called "magic bytes" which are the first few bytes of a file.
+
+What is the ASCII representation of the magic bytes for a VMDK file? The flag format will be 3-4 letters (there are two correct answers).
+
+Explanation:
+
+This one is very easy, all you have to do is google: magic bytes for a VMDK file 
+And you can either check the wiki page or this page I found : https://filesignatures.net/index.php?page=search&search=VMDK&mode=EXT 
