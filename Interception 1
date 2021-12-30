@@ -1,0 +1,32 @@
+Problem statement:
+192.168.0.1 is periodically (once every 4 seconds) sending the flag to 192.168.0.2 over UDP port 8000. Go get it.
+
+ssh ctf-1@host.cg21.metaproblems.com -p 7000
+If you get an SSH host key error, consider using
+ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" ctf-1@host.cg21.metaproblems.com -p 7000
+
+Note that the connection can take a while to initialize. It will say Granting console connection to device... and then three dots will appear. After the third dot you should have a connection.
+
+Explanation:
+When the user logs in to the server, they will find that they are assigned the IP address 192.168.0.3, which means that your system is in the same network as the source and destination.
+Now, what you need is that source should send the packets to your system instead of sending it to 192.168.0.2.
+Here you need to have basic understanding of networking, The IP address is layer three address and is required to identify the network and host. But for successful transmission of packet
+layer two address that is your MAC address is important.
+
+So now we need 192.168.0.1 to think that our system has IP address 192.168.0.2.
+
+Steps to change our own IP address:
+
+ifconfig eth0 down
+ifconfig eth0 192.168.0.2
+ifconfig eth0 up
+
+Now comes the difficult part, to find MAC address using IP address, systems on network make use of ARP. Once they have the MAC address they continue to send the packets to same MAC address
+So to make 192.168.0.1 to believe that we are 192.168.0.2 and now it must send the packets to outr system instead of the correct destination, we will need to run following two commands:
+
+ping 192.168.0.1
+traceroute 192.168.0.1
+
+Now, System 192.168.0.1 is sending the packets our way, so all we need to do is to capture the packets and print it:
+
+tcpdump -A -X -vvv -i any -n
